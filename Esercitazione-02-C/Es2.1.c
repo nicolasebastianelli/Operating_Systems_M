@@ -2,7 +2,7 @@
  * main.c
  *
  *  Created on: Oct 23, 2017
- *      Author: s0000718463
+ *      Author: s00007228894
  */
 
 #include <pthread.h>
