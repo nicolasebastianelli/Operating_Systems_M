@@ -1,7 +1,7 @@
 //  Created by Nicola Sebastianelli
 //
 //  Compilare con
-//  gcc -D_REENTRANT -std=c99 -o Esame Esame.c -lpthread
+//  gcc -D_REENTRANT -o Esame Esame.c -lpthread
 //
 
 #include <pthread.h>
