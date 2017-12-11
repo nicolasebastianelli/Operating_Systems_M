@@ -25,7 +25,7 @@ sem_t ordini;
 
 void *funcOrdina(void *t) {
     long result = 0;
-    int tipo = (int)t;
+    int tipo = (intptr_t)t;
 
 	while (1) {
 		printf("[P%i]: Arrivato nuovo ordine, inizio produzione\n",tipo);
@@ -42,7 +42,7 @@ void *funcOrdina(void *t) {
 
 void *funcMaglie(void *t) {
     long result = 0;
-	int tipo = (int)t;
+	int tipo = (intptr_t)t;
 	int i=0;
 	while(1){
 		sem_wait(&stampaMaglie);
@@ -60,7 +60,7 @@ void *funcMaglie(void *t) {
 
 void *funcAdesivi(void *t) {
     long result = 0;
-	int tipo = (int)t;
+	int tipo = (intptr_t)t;
 	int i=0;
 	while(1){
 			sem_wait(&stampaAdesivi);
@@ -77,7 +77,7 @@ void *funcAdesivi(void *t) {
 
 void *funcBorsa(void *t) {
     long result = 0;
-    	int tipo = (int)t;
+    	int tipo = (intptr_t)t;
     	int i=0;
     	while(1){
 			sem_wait(&stampaBorsa);
@@ -92,7 +92,7 @@ void *funcBorsa(void *t) {
 
 void *funcConfeziona(void *t) {
     long result = 0;
-    int tipo = (int)t;
+    int tipo = (intptr_t)t;
 
 	while (1) {
 		sem_wait(&confeziona);
@@ -123,27 +123,27 @@ int main (int argc, char *argv[]) {
     	sem_init(&confeziona, 0, 0);
     	sem_init(&ordini, 0, 0);
 
-	rc = pthread_create(&threadOrdina, NULL, funcOrdina, (void *)0);
+	rc = pthread_create(&threadOrdina, NULL, funcOrdina, (void *)(intptr_t)0);
 	if (rc) {
 		printf("ERRORE: %d\n", rc);
 		exit(-1);
 	}
-	rc = pthread_create(&threadMaglie, NULL, funcMaglie, (void *)1);
+	rc = pthread_create(&threadMaglie, NULL, funcMaglie, (void *)(intptr_t)1);
 	if (rc) {
 		printf("ERRORE: %d\n", rc);
 		exit(-1);
 	}
-	rc = pthread_create(&threadAdesivi, NULL, funcAdesivi, (void *)2);
+	rc = pthread_create(&threadAdesivi, NULL, funcAdesivi, (void *)(intptr_t)2);
 	if (rc) {
 		printf("ERRORE: %d\n", rc);
 		exit(-1);
 	}
-	rc = pthread_create(&threadBorsa, NULL, funcBorsa, (void *)3);
+	rc = pthread_create(&threadBorsa, NULL, funcBorsa, (void *)(intptr_t)3);
 	if (rc) {
 		printf("ERRORE: %d\n", rc);
 		exit(-1);
 	}
-	rc = pthread_create(&threadConfezionamento, NULL, funcConfeziona, (void *)4);
+	rc = pthread_create(&threadConfezionamento, NULL, funcConfeziona, (void *)(intptr_t)4);
 	if (rc) {
 		printf("ERRORE: %d\n", rc);
 		exit(-1);
