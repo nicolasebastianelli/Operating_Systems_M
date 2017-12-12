@@ -26,7 +26,7 @@ time_t  t;
 
 void *funcThread1(void *t) {
     int tipo = (intptr_t)t;
-    int result;
+    long result=0;
 
 	while (1) {
 		printf("[P %i]: Inizio \n",tipo);
@@ -41,7 +41,7 @@ void *funcThread1(void *t) {
 
 void *funcThread2(void *t) {
     int tipo = (intptr_t)t;
-    int result;
+    long result=0;
 
 	while (1) {
 		sem_wait(&struttura[0].semaforo1);
