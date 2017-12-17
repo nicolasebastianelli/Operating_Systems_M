@@ -19,6 +19,7 @@
 typedef struct{
 	sem_t semaforo1;
 	sem_t semaforo2;
+    pthread_mutex_t lock;
 }Struttura;
 
 Struttura struttura[3];
@@ -32,6 +33,9 @@ void *funcThread1(void *t) {
 		printf("[P %i]: Inizio \n",tipo);
 		sleep(rand()%5+1);
 		printf("[P %i]: Fine \n",tipo);
+        pthread_mutex_lock(&struttura[tipo].lock);
+       
+        pthread_mutex_unlock(&struttura[tipo].lock);
 		sem_post(&struttura[tipo].semaforo1);
 		sem_wait(&struttura[tipo].semaforo2);
 	}
@@ -66,18 +70,19 @@ int main (int argc, char *argv[]) {
     void *status;
 
     // inizializzazione semafori
-    for(i=0;i<=2;i++){
+    for(i=0;i<N;i++){
     	Struttura _struttura;
 
     	struttura[i] = _struttura;
 
     	sem_init(&struttura[i].semaforo1, 0, 0);
 		sem_init(&struttura[i].semaforo2, 0, 0);
+        pthread_mutex_init(&struttura[i].lock, NULL);
     }
 
     //create processi
 
-    for(i=0;i<=2;i++){
+    for(i=0;i<N;i++){
 		rc = pthread_create(&thread1[i], NULL, funcThread1, (void *)(intptr_t)i);
 			if (rc) {
 				printf("ERRORE: %d\n", rc);
@@ -92,7 +97,7 @@ int main (int argc, char *argv[]) {
 
 	// join processi
 
-	for(i=0;i<=2;i++){
+	for(i=0;i<N;i++){
 			rc = pthread_join(thread1[i], &status);
 				if (rc) {
 					printf("ERRORE: %d\n", rc);
