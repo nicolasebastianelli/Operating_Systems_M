@@ -5,12 +5,15 @@ This repository contains laboratory exercise, exams and templates for the [Opera
 ---
 
 **To compile C programs:**
+
 `gcc -D_REENTRANT -o fileName fileName.c -lpthread`
 
 **To run C programs:**
+
 `./fileName`
 
 **To compile and run Go programs:**
+
 `go run fileName.go`
 
 :warning: **WARNING:**
